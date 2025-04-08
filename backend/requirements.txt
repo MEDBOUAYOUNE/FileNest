@@ -1,0 +1,6 @@
+django
+psycopg2
+requests
+django-environ
+djangorestframework
+python-decouple
