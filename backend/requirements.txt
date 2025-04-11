@@ -1,6 +1,6 @@
 django
 psycopg2
 requests
+python-decouple
 django-environ
 djangorestframework
-python-decouple

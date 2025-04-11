@@ -1,13 +1,13 @@
 # version: '3.9'
 
 services:
-  db:
+  postgres:
     container_name: db
-    image: postgres:13
+    image: postgres:14
     env_file:
       - .env
     volumes:
-      - db:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
     networks:
       - groups
     restart: unless-stopped
@@ -26,7 +26,7 @@ services:
     networks:
       - groups
     depends_on:
-      - db
+      - postgres
     restart: unless-stopped
 
 networks:
@@ -35,12 +35,12 @@ networks:
 
 
 volumes:
-  db:
+  postgres:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: './db'
+      device: './postgres'
   backend:
     driver: local
     driver_opts:

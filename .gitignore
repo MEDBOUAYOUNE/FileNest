@@ -1,6 +1,5 @@
 .env
-db
-db.sqlite3
+postgres
 __pycache__
 *.pyc
 migrations
