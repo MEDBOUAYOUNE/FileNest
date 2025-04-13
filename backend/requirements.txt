@@ -4,3 +4,6 @@ requests
 python-decouple
 django-environ
 djangorestframework
+drf-yasg 
+pillow 
+python-magic

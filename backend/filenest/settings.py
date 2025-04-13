@@ -34,8 +34,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'filenestApp',
     'rest_framework',
+    'drf_yasg',
+    
     
 ]
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'JSON_EDITOR': True,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
