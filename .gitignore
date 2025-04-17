@@ -3,3 +3,4 @@ postgres
 __pycache__
 *.pyc
 migrations
+media
