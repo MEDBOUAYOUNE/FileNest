@@ -12,12 +12,19 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from cryptography.fernet import Fernet
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 SECRET_KEY = config('SECRET_KEY')
 
+FILE_ENCRYPTION_MASTER_KEY = os.environ.get('FILE_ENCRYPTION_MASTER_KEY')
+# if not FILE_ENCRYPTION_MASTER_KEY:
+#     FILE_ENCRYPTION_MASTER_KEY = Fernet.generate_key()
+if isinstance(FILE_ENCRYPTION_MASTER_KEY, str):
+    FILE_ENCRYPTION_MASTER_KEY = FILE_ENCRYPTION_MASTER_KEY.encode()
 
 DEBUG = True
 

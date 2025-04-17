@@ -7,3 +7,4 @@ djangorestframework
 drf-yasg 
 pillow 
 python-magic
+cryptography

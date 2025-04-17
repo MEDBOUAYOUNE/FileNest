@@ -19,7 +19,7 @@ schema_view = get_schema_view(
 urlpatterns = [
 
     path('api/upload', FileUploadView.as_view()),
-    path('api/<str:token>', DownloadFileView.as_view()),
+    path('api/download/<uuid:file_id>', DownloadFileView.as_view()),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
