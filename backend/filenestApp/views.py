@@ -12,7 +12,6 @@ class FileUploadView(APIView):
             return Response({
                 "message": "File uploaded successfully.",
                 "file_name": file_instance.file_name,
-                "token": file_instance.token,
                 "file_path" : file_instance.file_path.url,
                 "uploaded_at": file_instance.uploaded_at
             }, status=status.HTTP_201_CREATED)

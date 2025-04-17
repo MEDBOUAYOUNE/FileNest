@@ -15,7 +15,6 @@ class FileUploadSerializer(serializers.ModelSerializer):
 
         file_instance = File.objects.create(
             file_name=filename,
-            token=uuid.uuid4().hex,
             file_path=uploaded_file
         )
         return file_instance
