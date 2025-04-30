@@ -3,6 +3,7 @@ from django.conf import settings
 from .models import File
 from rest_framework import serializers
 import os
+import uuid
 
 class FileUploadSerializer(serializers.ModelSerializer):
     file = serializers.FileField(write_only=True)
@@ -34,6 +35,7 @@ class FileUploadSerializer(serializers.ModelSerializer):
         file_instance = File.objects.create(
             file_id = uuid.uuid4(),
             file_name=filename,
+            content_type = uploaded_file.content_type,
             encrypted_data=encrypted_data,
             encrypted_key=encrypted_file_key,
         )

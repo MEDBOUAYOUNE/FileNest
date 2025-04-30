@@ -5,6 +5,9 @@ from rest_framework import status
 from .models import File
 from .serializers import FileUploadSerializer
 from django.conf import settings
+from cryptography.fernet import Fernet
+import uuid
+from django.http import HttpResponse
 
 class FileUploadView(APIView):
      def post(self, request):
@@ -22,23 +25,29 @@ class FileUploadView(APIView):
 class DownloadFileView(APIView):
     def get(self, request, file_id):
         try:
-            file_instance = File.objects.get(file_id=file_id)
-            master_key = settings.FILE_ENCRYPTION_MASTER_KEY
-            master_cipher = Fernet(master_key)
+            # print(type(file_id))
+            # if not isinstance(file_id, uuid.UUID):
+            # file_id = uuid.UUID(file_id)
+                # file_id = uuid.UUID(file_id)
+            if File.objects.filter(file_id=file_id).exists():
+                file_instance = File.objects.get(file_id=file_id)
+                master_key = settings.FILE_ENCRYPTION_MASTER_KEY
+                master_cipher = Fernet(master_key)
+                
+                file_key = master_cipher.decrypt(bytes(file_instance.encrypted_key))
             
-            file_key = master_cipher.decrypt(file_instance.encrypted_key)
-        
-            cipher = Fernet(file_key)
-            decrypted_content = cipher.decrypt(file_instance.encrypted_data)
-            
- 
-            response = HttpResponse(
-                decrypted_content,
-                content_type='application/octet-stream'  
-            )
-            response['Content-Disposition'] = f'attachment; filename="{file_instance.file_name}"'
-            
-            return response
+                cipher = Fernet(file_key)
+                decrypted_content = cipher.decrypt(bytes(file_instance.encrypted_data))
+                
+    
+                response = HttpResponse(
+                    # {"hhzy": "yeh"}
+                    decrypted_content,
+                    # content_type=file_instance.content_type,  
+                )
+                response['Content-Disposition'] = f'attachment; filename="{file_instance.file_name}"'
+                
+                return response
             
         except File.DoesNotExist:
             return Response({"error": "File not found"}, status=status.HTTP_404_NOT_FOUND)

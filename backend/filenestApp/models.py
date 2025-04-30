@@ -7,6 +7,7 @@ import os
 class File(models.Model):
     file_id = models.UUIDField(primary_key=True, editable=False)
     file_name = models.CharField(max_length=200, blank=False, editable=False)
+    content_type = models.CharField(max_length=100)
     encrypted_data = models.BinaryField() 
     encrypted_key = models.BinaryField()
     uploaded_at = models.DateTimeField(auto_now_add=True)
